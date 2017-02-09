@@ -1,6 +1,0 @@
-repo: e266276178300aec93c67d3cd88392dedb0d3f5d
-node: 04fbaaa86695ef6c34ba265906b64843713be0a0
-branch: Master
-latesttag: null
-latesttagdistance: 270
-changessincelatesttag: 277
