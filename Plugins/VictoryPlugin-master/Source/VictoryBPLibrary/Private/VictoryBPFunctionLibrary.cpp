@@ -4344,7 +4344,7 @@ UTexture2D* UVictoryBPFunctionLibrary::Victory_LoadTexture2D_FromFile(const FStr
 	if (ImageWrapper.IsValid() && ImageWrapper->SetCompressed(RawFileData.GetData(), RawFileData.Num()))
 	{ 
 		const TArray<uint8>* UncompressedRGBA = NULL;
-		if (ImageWrapper->GetRaw(ERGBFormat::RGBA, 8, UncompressedRGBA))
+		if (ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, UncompressedRGBA))
 		{
 			LoadedT2D = UTexture2D::CreateTransient(ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), PF_R8G8B8A8);
 			
