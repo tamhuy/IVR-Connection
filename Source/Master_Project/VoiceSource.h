@@ -14,14 +14,12 @@ class MASTER_PROJECT_API UVoiceSource : public UActorComponent
 
 	IOnlineVoicePtr m_voice;
 
-	//TSharedPtr<FVoicePacket> m_voicePacket;
+	TSharedPtr<FVoicePacket> m_voicePacket;
 
 	FTimerHandle m_timerHandle;
-	/*
 	FTimerHandle m_timerFrequency;
 
 	FArchive m_freqArchive;
-	*/
 
 public:	
 	// Sets default values for this component's properties

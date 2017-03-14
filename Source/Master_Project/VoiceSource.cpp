@@ -18,7 +18,7 @@ UVoiceSource::UVoiceSource()
 UVoiceSource::~UVoiceSource()
 {
 	GetWorld()->GetTimerManager().ClearTimer(m_timerHandle);
-	//GetWorld()->GetTimerManager().ClearTimer(m_timerFrequency);
+	GetWorld()->GetTimerManager().ClearTimer(m_timerFrequency);
 }
 
 // Called when the game starts
@@ -63,10 +63,10 @@ void UVoiceSource::BeginPlay()
 		{
 			m_voice->Tick(1.f / 22500.f);
 
-			//m_voicePacket = m_voice->GetLocalPacket(0);
+			m_voicePacket = m_voice->GetLocalPacket(0);
 		}
 	}, 1.f / 22500.f, true, 0.5f);
-	/*
+	
 	GetWorld()->GetTimerManager().SetTimer(m_timerFrequency, [&]()
 	{
 		if (m_voicePacket.IsValid())
@@ -74,7 +74,7 @@ void UVoiceSource::BeginPlay()
 			m_voicePacket->Serialize(m_freqArchive);
 		}
 	}, 1.f / 10.f, true, 0.5f);
-	*/
+	
 }
 
 
