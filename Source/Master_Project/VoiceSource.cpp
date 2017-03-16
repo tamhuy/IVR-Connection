@@ -5,6 +5,10 @@
 
 #include "OnlineSubsystemUtils.h"
 
+#include <mutex>
+
+static std::mutex m_voice_source_mutex;
+
 // Sets default values for this component's properties
 UVoiceSource::UVoiceSource()
 {
@@ -15,25 +19,9 @@ UVoiceSource::UVoiceSource()
 	// ...
 }
 
-UVoiceSource::~UVoiceSource()
-{
-	GetWorld()->GetTimerManager().ClearTimer(m_timerHandle);
-	//GetWorld()->GetTimerManager().ClearTimer(m_timerFrequency);
-}
-
 // Called when the game starts
 void UVoiceSource::BeginPlay()
 {
-	auto alib = LoadLibrary(L"dsound");
-
-	if (alib)
-	{
-		UE_LOG(LogGarbage, Warning, TEXT("Loaded module!"));
-	}
-	else {
-		UE_LOG(LogGarbage, Warning, TEXT("Failed to load DLL"));
-	}
-
 	Super::BeginPlay();
 
 	auto online = IOnlineSubsystem::Get("Steam");
@@ -57,15 +45,20 @@ void UVoiceSource::BeginPlay()
 
 	UE_LOG(LogGarbage, Warning, TEXT("LOL"));
 
-	GetWorld()->GetTimerManager().SetTimer(m_timerHandle, [&]()
+	GetWorld()->GetTimerManager().SetTimer(
+		m_timerHandle, [&]()
 	{
+		m_voice_source_mutex.lock();	
 		if (m_voice.IsValid())
 		{
 			m_voice->Tick(1.f / 22500.f);
 
 			//m_voicePacket = m_voice->GetLocalPacket(0);
 		}
-	}, 1.f / 22500.f, true, 0.5f);
+		m_voice_source_mutex.unlock();
+	},
+	1.f / 22500.f, true, 0.5f
+	);
 	/*
 	GetWorld()->GetTimerManager().SetTimer(m_timerFrequency, [&]()
 	{
@@ -77,14 +70,23 @@ void UVoiceSource::BeginPlay()
 	*/
 }
 
+void UVoiceSource::BeginDestroy()
+{
+	m_voice_source_mutex.lock();
+
+	Super::BeginDestroy();
+
+	if(m_timerHandle.IsValid() && GetWorld())
+		GetWorld()->GetTimerManager().ClearTimer(m_timerHandle);
+	//GetWorld()->GetTimerManager().ClearTimer(m_timerFrequency);
+
+	m_voice_source_mutex.unlock();
+}
 
 // Called every frame
 void UVoiceSource::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	
-
 	// ...
 }
 

@@ -26,10 +26,10 @@ class MASTER_PROJECT_API UVoiceSource : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UVoiceSource();
-	~UVoiceSource();
 
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void BeginDestroy() override;
 	
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
