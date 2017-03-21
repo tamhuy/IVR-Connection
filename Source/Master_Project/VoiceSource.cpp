@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Master_Project.h"
-#include "VoiceSource.h"
 
-#include "OnlineSubsystemUtils.h"
+#include "VoiceSource.h"
 
 // Sets default values for this component's properties
 UVoiceSource::UVoiceSource()
@@ -15,25 +14,9 @@ UVoiceSource::UVoiceSource()
 	// ...
 }
 
-UVoiceSource::~UVoiceSource()
-{
-	GetWorld()->GetTimerManager().ClearTimer(m_timerHandle);
-	GetWorld()->GetTimerManager().ClearTimer(m_timerFrequency);
-}
-
 // Called when the game starts
 void UVoiceSource::BeginPlay()
 {
-	auto alib = LoadLibrary(L"dsound");
-
-	if (alib)
-	{
-		UE_LOG(LogGarbage, Warning, TEXT("Loaded module!"));
-	}
-	else {
-		UE_LOG(LogGarbage, Warning, TEXT("Failed to load DLL"));
-	}
-
 	Super::BeginPlay();
 
 	auto online = IOnlineSubsystem::Get("Steam");
@@ -57,7 +40,8 @@ void UVoiceSource::BeginPlay()
 
 	UE_LOG(LogGarbage, Warning, TEXT("LOL"));
 
-	GetWorld()->GetTimerManager().SetTimer(m_timerHandle, [&]()
+	GetWorld()->GetTimerManager().SetTimer(
+		m_timerHandle, [&]()
 	{
 		if (m_voice.IsValid())
 		{
@@ -66,7 +50,7 @@ void UVoiceSource::BeginPlay()
 			m_voicePacket = m_voice->GetLocalPacket(0);
 		}
 	}, 1.f / 22500.f, true, 0.5f);
-	
+
 	GetWorld()->GetTimerManager().SetTimer(m_timerFrequency, [&]()
 	{
 		if (m_voicePacket.IsValid())
@@ -77,14 +61,20 @@ void UVoiceSource::BeginPlay()
 	
 }
 
+void UVoiceSource::BeginDestroy()
+{
+	Super::BeginDestroy();
+
+	if(m_timerHandle.IsValid() && GetWorld())
+		GetWorld()->GetTimerManager().ClearTimer(m_timerHandle);
+	//GetWorld()->GetTimerManager().ClearTimer(m_timerFrequency);
+
+}
 
 // Called every frame
 void UVoiceSource::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
-	
-
 	// ...
 }
 
