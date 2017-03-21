@@ -38,18 +38,18 @@ void UVoiceSource::BeginPlay()
 	
 	m_voice = voice;
 
-	UE_LOG(LogGarbage, Warning, TEXT("LOL"));
+	float tick_rate = 1.f / 100.f;
 
 	GetWorld()->GetTimerManager().SetTimer(
 		m_timerHandle, [&]()
 	{
 		if (m_voice.IsValid())
 		{
-			m_voice->Tick(1.f / 22500.f);
+			m_voice->Tick(tick_rate);
 
 			m_voicePacket = m_voice->GetLocalPacket(0);
 		}
-	}, 1.f / 22500.f, true, 0.5f);
+	}, tick_rate, true, 0.5f);
 
 	GetWorld()->GetTimerManager().SetTimer(m_timerFrequency, [&]()
 	{
