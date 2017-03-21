@@ -4,7 +4,9 @@
 
 #include "Components/ActorComponent.h"
 #include "OnlineSubsystemUtils.h"
+
 #include "VoiceDataCommon.h"
+#include "Sound/SoundWaveProcedural.h"
 
 #include "VoiceSource.generated.h"
 

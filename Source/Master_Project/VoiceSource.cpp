@@ -48,6 +48,8 @@ void UVoiceSource::BeginPlay()
 			m_voice->Tick(tick_rate);
 
 			m_voicePacket = m_voice->GetLocalPacket(0);
+
+			//USoundWaveProcedural m_wave = USoundWaveProcedural();
 		}
 	}, tick_rate, true, 0.5f);
 
