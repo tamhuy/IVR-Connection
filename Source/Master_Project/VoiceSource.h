@@ -7,6 +7,7 @@
 
 #include "VoiceDataCommon.h"
 #include "Sound/SoundWaveProcedural.h"
+#include "VoicePacketImpl.h"
 
 #include "VoiceSource.generated.h"
 
@@ -23,6 +24,8 @@ class MASTER_PROJECT_API UVoiceSource : public UActorComponent
 	FTimerHandle m_timerFrequency;
 
 	FArchive m_freqArchive;
+
+	TMap<FString, USoundWaveProcedural*> m_soundWaves;
 
 public:	
 	// Sets default values for this component's properties

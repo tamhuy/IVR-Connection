@@ -33,6 +33,8 @@ void UVoiceSource::BeginPlay()
 		return;
 	}
 
+	UE_LOG(LogGarbage, Warning, TEXT("LOL"));
+
 	voice->StartNetworkedVoice(0);
 	voice->RegisterLocalTalker(0);
 	
@@ -47,20 +49,36 @@ void UVoiceSource::BeginPlay()
 		{
 			m_voice->Tick(tick_rate);
 
-			m_voicePacket = m_voice->GetLocalPacket(0);
+			for(int32_t i=0; i < m_voice->GetNumLocalTalkers(); i++)
+			{
+				m_voicePacket = m_voice->GetLocalPacket(i);
 
-			//USoundWaveProcedural m_wave = USoundWaveProcedural();
+				if (!m_voicePacket.IsValid() || !m_voicePacket->GetSender().IsValid())
+					continue;
+
+				auto sender = m_voicePacket->GetSender()->ToString();
+
+				USoundWaveProcedural* wave = nullptr;
+				if (m_soundWaves.Contains(sender))
+					wave = m_soundWaves[sender];
+				if (!wave)
+				{
+					wave = NewObject<USoundWaveProcedural>();
+				}
+
+				FVoicePacketImpl* packet = (FVoicePacketImpl*)(m_voicePacket.Get());
+				UE_LOG(LogGarbage, Warning, TEXT("Packet data: %i"), packet->GetBufferSize());
+				wave->QueueAudio(packet->Buffer.GetData(), packet->GetBufferSize());
+
+				m_voicePacket.Reset();
+			}
 		}
 	}, tick_rate, true, 0.5f);
 
 	GetWorld()->GetTimerManager().SetTimer(m_timerFrequency, [&]()
 	{
-		if (m_voicePacket.IsValid())
-		{
-			m_voicePacket->Serialize(m_freqArchive);
-		}
+		
 	}, 1.f / 10.f, true, 0.5f);
-	
 }
 
 void UVoiceSource::BeginDestroy()
