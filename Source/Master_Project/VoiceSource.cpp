@@ -40,7 +40,7 @@ void UVoiceSource::BeginPlay()
 	
 	m_voice = voice;
 
-	float tick_rate = 1.f / 100.f;
+	float tick_rate = 1.f / 60.f;
 
 	GetWorld()->GetTimerManager().SetTimer(
 		m_timerHandle, [&]()
@@ -48,6 +48,8 @@ void UVoiceSource::BeginPlay()
 		if (m_voice.IsValid())
 		{
 			m_voice->Tick(tick_rate);
+
+			return;
 
 			for(int32_t i=0; i < m_voice->GetNumLocalTalkers(); i++)
 			{
