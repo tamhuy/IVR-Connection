@@ -31,6 +31,12 @@ public:
 	// Sets default values for this component's properties
 	UVoiceSource();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Voice Chat")
+		USoundWave* GetPlayerSound(int id);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Voice Chat")
+		float GetSoundDuration(USoundWave* wav);
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	virtual void BeginDestroy() override;

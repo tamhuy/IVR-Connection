@@ -49,8 +49,6 @@ void UVoiceSource::BeginPlay()
 		{
 			m_voice->Tick(tick_rate);
 
-			return;
-
 			for(int32_t i=0; i < m_voice->GetNumLocalTalkers(); i++)
 			{
 				m_voicePacket = m_voice->GetLocalPacket(i);
@@ -69,6 +67,7 @@ void UVoiceSource::BeginPlay()
 				}
 
 				FVoicePacketImpl* packet = (FVoicePacketImpl*)(m_voicePacket.Get());
+				UE_LOG(LogGarbage, Warning, TEXT("Packet sender: %s"), &sender[0]);
 				UE_LOG(LogGarbage, Warning, TEXT("Packet data: %i"), packet->GetBufferSize());
 				wave->QueueAudio(packet->Buffer.GetData(), packet->GetBufferSize());
 
@@ -100,3 +99,14 @@ void UVoiceSource::TickComponent( float DeltaTime, ELevelTick TickType, FActorCo
 	// ...
 }
 
+USoundWave* UVoiceSource::GetPlayerSound(int id)
+{
+	return nullptr;
+}
+
+float UVoiceSource::GetSoundDuration(USoundWave* wav)
+{
+	if(wav)
+		return wav->GetDuration();
+	return 0;
+}
