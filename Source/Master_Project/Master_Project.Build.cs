@@ -6,7 +6,13 @@ public class Master_Project : ModuleRules
 {
 	public Master_Project(TargetInfo Target)
 	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "ImageWrapper" });
+		PublicDependencyModuleNames.AddRange(new string[] {
+            "Core", "CoreUObject", "Engine",
+            "InputCore", "ImageWrapper",
+            "OnlineSubsystem", "OnlineSubsystemUtils",
+            "Voice" });
+
+        PublicIncludePaths.AddRange(new string[] { "Voice/Public", "Voice/Classes" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
@@ -14,7 +20,7 @@ public class Master_Project : ModuleRules
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 		
 		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
+		PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
 		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
 	}
