@@ -92,8 +92,8 @@ void UVoiceSource::BeginPlay()
 
 				/* Through black magic we retrieve the voice packet's data, cast it to its implementation detail (because it's otherwise unavailable) */
 				FVoicePacketImpl* packet = (FVoicePacketImpl*)(m_voicePacket.Get());
-				UE_LOG(LogGarbage, Warning, TEXT("Packet sender: %s"), &sender[0]);
-				UE_LOG(LogGarbage, Warning, TEXT("Packet data: %i"), packet->GetBufferSize());
+				//UE_LOG(LogGarbage, Warning, TEXT("Packet sender: %s"), &sender[0]);
+				//UE_LOG(LogGarbage, Warning, TEXT("Packet data: %i"), packet->GetBufferSize());
 				/* And we queue the data in our sound wave */
 				wave->QueueAudio(packet->Buffer.GetData(), packet->GetBufferSize());
 			}
