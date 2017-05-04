@@ -63,6 +63,8 @@ void UVoiceSource::BeginPlay()
 			/* ... we give it time to tick... */
 			m_voice->Tick(tick_rate);
 
+			return;
+
 			/* and proceed to retrieve audio data.
 			 * This code is not proved to work.
 			 */
