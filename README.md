@@ -1,11 +1,11 @@
 # IT2901 project
 
 
-This is the source code of DreamTeam 2000's bachelor thesis in Unreal Engine 4, based on source code from:
+This is the source code of Group 6's bachelor project in Unreal Engine 4, based on source code from:
 http://gitlab.com/Indranos/IVR-Connection
 
 # Cloning the project for building
-Run Git as such:
+Run Git:
 
     git clone --recursive https://github.com/hbirchtree/it2901-project.git
 
