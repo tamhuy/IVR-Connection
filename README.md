@@ -1,4 +1,4 @@
-# IT2901 project
+# Four campuses One Reality
 
 
 This is the source code of Group 6's bachelor project in Unreal Engine 4, based on source code from:
