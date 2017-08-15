@@ -8,7 +8,8 @@ public class Master_ProjectTarget : TargetRules
 	public Master_ProjectTarget(TargetInfo Target)
 	{
 		Type = TargetType.Game;
-	}
+        bUsesSteam = true;
+    }
 
 	//
 	// TargetRules interface.
