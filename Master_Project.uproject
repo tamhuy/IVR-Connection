@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.14",
+	"EngineAssociation": "4.17",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -32,7 +32,7 @@
 		},
 		{
 			"Name": "VictoryBPLibrary",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "http://www.ue4code.com"
 		},
 		{
@@ -47,6 +47,10 @@
 			"Name": "Substance",
 			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/2f6439c2f9584f49809d9b13b16c2ba4"
+		},
+		{
+			"Name": "OpenVRExpansionPlugin",
+			"Enabled": true
 		}
 	],
 	"TargetPlatforms": [
