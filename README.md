@@ -1,8 +1,8 @@
 # Four campuses One Reality
 
+Forked from the bachelor project: https://github.com/tamhuy/IVR-Connection.git
 
-This is the source code of Group 6's bachelor project in Unreal Engine 4, based on source code from:
-http://gitlab.com/Indranos/IVR-Connection
+Project Source: http://gitlab.com/Indranos/IVR-Connection
 
 # Cloning the project for building
 Run Git:
