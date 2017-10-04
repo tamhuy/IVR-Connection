@@ -1,6 +1,5 @@
 # Four campuses One Reality
 
-
 Forked from the bachelor project:
 https://github.com/tamhuy/IVR-Connection.git
 

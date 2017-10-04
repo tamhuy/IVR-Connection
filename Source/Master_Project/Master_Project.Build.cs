@@ -14,7 +14,7 @@ public class Master_Project : ModuleRules
 
         PublicIncludePaths.AddRange(new string[] { "Voice/Public", "Voice/Classes" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+        PrivateDependencyModuleNames.AddRange(new string[] { "ImageWrapper", "RenderCore" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
