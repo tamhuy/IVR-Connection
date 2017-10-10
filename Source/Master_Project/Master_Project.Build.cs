@@ -4,7 +4,7 @@ using UnrealBuildTool;
 
 public class Master_Project : ModuleRules
 {
-	public Master_Project(TargetInfo Target)
+	public Master_Project(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] {
             "Core", "CoreUObject", "Engine",

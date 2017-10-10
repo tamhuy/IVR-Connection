@@ -5,22 +5,10 @@ using System.Collections.Generic;
 
 public class Master_ProjectTarget : TargetRules
 {
-	public Master_ProjectTarget(TargetInfo Target)
+	public Master_ProjectTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
         bUsesSteam = true;
+        ExtraModuleNames.AddRange(new string[] { "Master_Project" });
     }
-
-	//
-	// TargetRules interface.
-	//
-
-	public override void SetupBinaries(
-		TargetInfo Target,
-		ref List<UEBuildBinaryConfiguration> OutBuildBinaryConfigurations,
-		ref List<string> OutExtraModuleNames
-		)
-	{
-		OutExtraModuleNames.AddRange( new string[] { "Master_Project" } );
-	}
 }
