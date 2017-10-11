@@ -10,7 +10,7 @@
 #define UIL_LOG(Verbosity, Format, ...)	UE_LOG(LogTemp, Verbosity, Format, __VA_ARGS__)
  
 // Module loading is not allowed outside of the main thread, so we load the ImageWrapper module ahead of time.
-static IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(TEXT("ImageWrapper"));
+//static IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(TEXT("ImageWrapper"));
  
 UImageLoader* UImageLoader::LoadImageFromDiskAsync(UObject* Outer, const FString& ImagePath)
 {
@@ -61,6 +61,7 @@ UTexture2D* UImageLoader::LoadImageFromDisk(UObject* Outer, const FString& Image
 	}
  
 	// Detect the image type using the ImageWrapper module
+	IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(TEXT("ImageWrapper"));
 	EImageFormat::Type ImageFormat = ImageWrapperModule.DetectImageFormat(FileData.GetData(), FileData.Num());
 	if (ImageFormat == EImageFormat::Invalid)
 	{
