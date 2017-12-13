@@ -2,7 +2,8 @@
 #include "Master_Project.h"
  
 #include "ImageLoader.h"
-#include "ImageWrapper.h"
+#include "Runtime/ImageWrapper/Public/IImageWrapper.h"
+#include "Runtime/ImageWrapper/Public/IImageWrapperModule.h"
 #include "RenderUtils.h"
 #include "Engine/Texture2D.h"
  
@@ -62,7 +63,7 @@ UTexture2D* UImageLoader::LoadImageFromDisk(UObject* Outer, const FString& Image
  
 	// Detect the image type using the ImageWrapper module
 	IImageWrapperModule& ImageWrapperModule = FModuleManager::LoadModuleChecked<IImageWrapperModule>(TEXT("ImageWrapper"));
-	EImageFormat::Type ImageFormat = ImageWrapperModule.DetectImageFormat(FileData.GetData(), FileData.Num());
+	EImageFormat ImageFormat = ImageWrapperModule.DetectImageFormat(FileData.GetData(), FileData.Num());
 	if (ImageFormat == EImageFormat::Invalid)
 	{
 		UIL_LOG(Error, TEXT("Unrecognized image file format: %s"), *ImagePath);
@@ -70,7 +71,7 @@ UTexture2D* UImageLoader::LoadImageFromDisk(UObject* Outer, const FString& Image
 	}
  
 	// Create an image wrapper for the detected image format
-	IImageWrapperPtr ImageWrapper = ImageWrapperModule.CreateImageWrapper(ImageFormat);
+	TSharedPtr<IImageWrapper> ImageWrapper = ImageWrapperModule.CreateImageWrapper(ImageFormat);
 	if (!ImageWrapper.IsValid())
 	{
 		UIL_LOG(Error, TEXT("Failed to create image wrapper for file: %s"), *ImagePath);
@@ -79,15 +80,15 @@ UTexture2D* UImageLoader::LoadImageFromDisk(UObject* Outer, const FString& Image
  
 	// Decompress the image data
 	const TArray<uint8>* RawData = nullptr;
-	ImageWrapper->SetCompressed(FileData.GetData(), FileData.Num());
-	ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, RawData);
+	//ImageWrapper->SetCompressed(FileData.GetData(), FileData.Num());
+	//ImageWrapper->GetRaw(ERGBFormat::BGRA, 8, RawData);
 	if (RawData == nullptr)
 	{
 		UIL_LOG(Error, TEXT("Failed to decompress image file: %s"), *ImagePath);
 		return nullptr;
 	}
  
-	// Create the texture and upload the uncompressed image data
+	// Create the texture and upload the uncompressed image data  
 	FString TextureBaseName = TEXT("Texture_") + FPaths::GetBaseFilename(ImagePath);
 	return CreateTexture(Outer, *RawData, ImageWrapper->GetWidth(), ImageWrapper->GetHeight(), EPixelFormat::PF_B8G8R8A8, FName(*TextureBaseName));
 }
